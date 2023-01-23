@@ -4,18 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import org.koin.java.KoinJavaComponent.inject
 
-@AndroidEntryPoint
 class ForecastActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var api: ForecastApi
+    private val api: ForecastApi by inject(ForecastApi::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +31,7 @@ class ForecastActivity : AppCompatActivity() {
 
     private fun showForecast(forecast: ForecastResponse) {
         title = forecast.location?.name
-        if(forecast.daily!=null){
+        if (forecast.daily != null) {
             recycler_forecast.layoutManager = LinearLayoutManager(this)
             recycler_forecast.adapter = ForecastAdapter(forecast.daily)
         }
