@@ -3,38 +3,26 @@ package com.joerakhimov.niceweather.forecast
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.joerakhimov.niceweather.R
+import com.joerakhimov.niceweather.di.Injector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class ForecastActivity : AppCompatActivity() {
 
-    private lateinit var api: ForecastApi
-
-    private fun initApi() {
-        val interceptor = ChuckerInterceptor.Builder(this).build()
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-        api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ForecastApi::class.java)
+    init {
+        Injector.appComponent.inject(this)
     }
+
+    @Inject
+    lateinit var api: ForecastApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initApi()
         getForecast()
     }
 
