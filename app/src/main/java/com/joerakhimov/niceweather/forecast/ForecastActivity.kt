@@ -4,18 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
-import com.joerakhimov.niceweather.di.Injector
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ForecastActivity : AppCompatActivity() {
-
-    init {
-        Injector.appComponent.inject(this)
-    }
 
     @Inject
     lateinit var api: ForecastApi

@@ -1,12 +1,7 @@
 package com.joerakhimov.niceweather.di
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class App: Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-        Injector.initAppComponent(this)
-    }
-
-}
+@HiltAndroidApp
+class App: Application()

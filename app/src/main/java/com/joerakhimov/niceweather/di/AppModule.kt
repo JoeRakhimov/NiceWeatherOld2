@@ -6,13 +6,15 @@ import com.joerakhimov.niceweather.forecast.BASE_URL
 import com.joerakhimov.niceweather.forecast.ForecastApi
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Qualifier
-import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -23,12 +25,13 @@ annotation class HttpInterceptor
 annotation class LoggingInterceptor
 
 @Module
-class AppModule(private val context: Context) {
+@InstallIn(SingletonComponent::class)
+class AppModule {
 
     //    @Named("HttpInterceptor")
     @Provides
     @HttpInterceptor
-    fun provideHttpInterceptor(): Interceptor =
+    fun provideHttpInterceptor(@ApplicationContext context: Context): Interceptor =
         ChuckerInterceptor.Builder(context).build()
 
     //    @Named("LoggingInterceptor")
