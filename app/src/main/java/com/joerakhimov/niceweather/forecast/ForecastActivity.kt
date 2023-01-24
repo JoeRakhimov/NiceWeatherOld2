@@ -6,33 +6,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForecastActivity : AppCompatActivity() {
+class ForecastActivity : AppCompatActivity(), ForecastView {
 
     @Inject
-    lateinit var api: ForecastApi
+    lateinit var presenter: ForecastPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getForecast()
+        presenter.getForecast()
     }
 
-    private fun getForecast() {
-        runBlocking {
-            withContext(Dispatchers.IO) {
-                val forecast = api.getForecast()
-                forecast.daily?.let { showForecast(forecast) }
-            }
-        }
-    }
-
-    private fun showForecast(forecast: ForecastResponse) {
+    override fun showForecast(forecast: ForecastResponse) {
         title = forecast.location?.name
         if(forecast.daily!=null){
             recycler_forecast.layoutManager = LinearLayoutManager(this)
