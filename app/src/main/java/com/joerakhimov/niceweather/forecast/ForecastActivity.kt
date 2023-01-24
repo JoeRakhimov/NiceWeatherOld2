@@ -2,33 +2,23 @@ package com.joerakhimov.niceweather.forecast
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForecastActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var api: ForecastApi
+    private val  viewModel: ForecastViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getForecast()
-    }
-
-    private fun getForecast() {
-        runBlocking {
-            withContext(Dispatchers.IO) {
-                val forecast = api.getForecast()
-                forecast.daily?.let { showForecast(forecast) }
-            }
+        viewModel.getForecast()
+        viewModel.forecast.observe(this) { forecast ->
+            showForecast(forecast)
         }
     }
 

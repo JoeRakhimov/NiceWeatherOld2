@@ -60,6 +60,9 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
 
+    // Kotlin extensions for activity artifacts
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+
 }
 
 // Allow references to generated code
