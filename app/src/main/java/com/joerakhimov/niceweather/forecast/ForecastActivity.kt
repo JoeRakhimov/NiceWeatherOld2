@@ -3,25 +3,25 @@ package com.joerakhimov.niceweather.forecast
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForecastActivity : AppCompatActivity(), ForecastView {
+class ForecastActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var presenter: ForecastPresenter
+    private val viewModel: ForecastViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter.handleIntent(ForecastIntent.GetForecastIntent)
+        viewModel.state.observe(this){ state -> render(state) }
+        viewModel.handleIntent(ForecastIntent.GetForecastIntent)
     }
 
-    override fun render(state: ForecastState) {
+    private fun render(state: ForecastState) {
         when(state){
             is ForecastState.LoadingState -> showLoading()
             is ForecastState.DataState -> showForecast(state.forecast)
