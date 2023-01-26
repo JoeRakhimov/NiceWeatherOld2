@@ -18,21 +18,26 @@ class ForecastActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.state.observe(this){ state -> render(state) }
+        container.setOnRefreshListener {
+            viewModel.handleIntent(ForecastIntent.GetForecastIntent)
+        }
     }
 
     private fun render(state: ForecastState) {
         when(state){
-            is ForecastState.LoadingState -> showLoading()
-            is ForecastState.DataState -> showForecast(state.forecast)
+            is ForecastState.LoadingState -> renderLoadingState()
+            is ForecastState.DataState -> renderDataState(state.forecast)
         }
     }
 
-    private fun showLoading(){
-        progress.visibility = View.VISIBLE
+    private fun renderLoadingState(){
+        container.isRefreshing = true
+        recycler_forecast.visibility = View.GONE
     }
 
-    private fun showForecast(forecast: ForecastResponse) {
-        progress.visibility = View.GONE
+    private fun renderDataState(forecast: ForecastResponse) {
+        container.isRefreshing = false
+        recycler_forecast.visibility = View.VISIBLE
         title = forecast.location?.name
         if(forecast.daily!=null){
             recycler_forecast.layoutManager = LinearLayoutManager(this)

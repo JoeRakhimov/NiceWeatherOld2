@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,15 +24,24 @@ sealed class ForecastState {
 @HiltViewModel
 class ForecastViewModel @Inject constructor(private val api: ForecastApi) : ViewModel() {
 
+    private val intents = Channel<ForecastIntent>()
+
     private val _state = MutableLiveData<ForecastState>()
     val state: LiveData<ForecastState> = _state
 
     init {
-        handleIntent(ForecastIntent.GetForecastIntent)
+        intents.receiveAsFlow()
+            .onEach(::updateState)
+            .launchIn(viewModelScope)
+        intents.trySend(ForecastIntent.GetForecastIntent)
     }
 
     fun handleIntent(intent: ForecastIntent) {
-        when (intent) {
+        intents.trySend(intent)
+    }
+
+    private fun updateState(intent: ForecastIntent){
+        when(intent){
             is ForecastIntent.GetForecastIntent -> getForecast()
         }
     }
