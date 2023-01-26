@@ -18,7 +18,6 @@ class ForecastActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.state.observe(this){ state -> render(state) }
-        viewModel.handleIntent(ForecastIntent.GetForecastIntent)
     }
 
     private fun render(state: ForecastState) {

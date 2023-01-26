@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 sealed class ForecastIntent {
@@ -25,6 +22,10 @@ class ForecastViewModel @Inject constructor(private val api: ForecastApi) : View
 
     private val _state = MutableLiveData<ForecastState>()
     val state: LiveData<ForecastState> = _state
+
+    init {
+        handleIntent(ForecastIntent.GetForecastIntent)
+    }
 
     fun handleIntent(intent: ForecastIntent) {
         when (intent) {
