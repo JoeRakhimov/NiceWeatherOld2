@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.listitem_forecast.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -49,9 +51,19 @@ class ForecastAdapter(
 //                    if (tempMin != null) showTemperature(viewHolder, tempMin, it)
 //                }
                 launch {
-                    val tempMin: Double = temperatureConverter.fromCelsiusToFahrenheitUsingCoroutines(dayForecast.tempMin)
-                    val tempMax: Double = temperatureConverter.fromCelsiusToFahrenheitUsingCoroutines(dayForecast.tempMax)
-                    showTemperature(viewHolder, tempMin, tempMax)
+                    // Coroutines
+//                    val tempMin: Double = temperatureConverter.fromCelsiusToFahrenheitUsingCoroutines(dayForecast.tempMin)
+//                    val tempMax: Double = temperatureConverter.fromCelsiusToFahrenheitUsingCoroutines(dayForecast.tempMax)
+//                    showTemperature(viewHolder, tempMin, tempMax)
+
+                    // Flows
+                    val flowTempMin = temperatureConverter.fromCelsiusToFahrenheitUsingFlows(dayForecast.tempMin)
+                    val flowTempMax = temperatureConverter.fromCelsiusToFahrenheitUsingFlows(dayForecast.tempMax)
+                    flowTempMin.zip(flowTempMax){ tempMin, tempMax ->
+                        "$tempMin°/$tempMax°C"
+                    }.collect{
+                        viewHolder.itemView.text_temp.text = it
+                    }
                 }
 
             }

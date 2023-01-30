@@ -9,6 +9,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -53,6 +55,13 @@ class TemperatureConverterImpl @Inject constructor() : TemperatureConverter {
     override suspend fun fromCelsiusToFahrenheitUsingCoroutines(celsius: Double): Double {
         return withContext(Dispatchers.IO){
             celsius * 1.8 + 32
+        }
+    }
+
+    // Coroutines
+    override suspend fun fromCelsiusToFahrenheitUsingFlows(celsius: Double): Flow<Double> {
+        return flow {
+            this.emit(celsius * 1.8 + 32)
         }
     }
 
