@@ -8,14 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.joerakhimov.niceweather.R
 import com.joerakhimov.niceweather.utils.TemperatureConverter
 import kotlinx.android.synthetic.main.listitem_forecast.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class ForecastAdapter(
     private val dailyForecast: List<DailyItem>,
     private val temperatureConverter: TemperatureConverter
-) :
-    RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
+): RecyclerView.Adapter<ForecastAdapter.ViewHolder>(), CoroutineScope {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+    private lateinit var job: Job
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
@@ -32,14 +40,20 @@ class ForecastAdapter(
                 viewHolder.itemView.text_temp.text =
                     "${dayForecast.tempMin}°/${dayForecast.tempMax}°C"
             } else {
-                val tempMin: Double? = null
-                val tempMax: Double? = null
-                temperatureConverter.fromCelsiusToFahrenheit(dayForecast.tempMin) {
-                    if (tempMax != null) showTemperature(viewHolder, it, tempMax)
+//                val tempMin: Double? = null
+//                val tempMax: Double? = null
+//                temperatureConverter.fromCelsiusToFahrenheit(dayForecast.tempMin) {
+//                    if (tempMax != null) showTemperature(viewHolder, it, tempMax)
+//                }
+//                temperatureConverter.fromCelsiusToFahrenheit(dayForecast.tempMax) {
+//                    if (tempMin != null) showTemperature(viewHolder, tempMin, it)
+//                }
+                launch {
+                    val tempMin: Double = temperatureConverter.fromCelsiusToFahrenheitUsingCoroutines(dayForecast.tempMin)
+                    val tempMax: Double = temperatureConverter.fromCelsiusToFahrenheitUsingCoroutines(dayForecast.tempMax)
+                    showTemperature(viewHolder, tempMin, tempMax)
                 }
-                temperatureConverter.fromCelsiusToFahrenheit(dayForecast.tempMax) {
-                    if (tempMin != null) showTemperature(viewHolder, tempMin, it)
-                }
+
             }
 
         }
