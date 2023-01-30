@@ -23,7 +23,7 @@ class ForecastAdapter(
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
-    private lateinit var job: Job
+    private var job: Job = Job()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
@@ -71,5 +71,10 @@ class ForecastAdapter(
     }
 
     override fun getItemCount() = dailyForecast.size
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        job.cancel()
+    }
 
 }
