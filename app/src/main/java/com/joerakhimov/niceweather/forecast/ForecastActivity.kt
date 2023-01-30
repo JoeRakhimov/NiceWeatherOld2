@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
+import com.joerakhimov.niceweather.utils.TemperatureConverter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,9 @@ class ForecastActivity : AppCompatActivity() {
 
     @Inject
     lateinit var api: ForecastApi
+
+    @Inject
+    lateinit var temperatureConverter: TemperatureConverter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +40,7 @@ class ForecastActivity : AppCompatActivity() {
         title = forecast.location?.name
         if(forecast.daily!=null){
             recycler_forecast.layoutManager = LinearLayoutManager(this)
-            recycler_forecast.adapter = ForecastAdapter(forecast.daily)
+            recycler_forecast.adapter = ForecastAdapter(forecast.daily, temperatureConverter)
         }
     }
 

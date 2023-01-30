@@ -4,6 +4,9 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.joerakhimov.niceweather.forecast.BASE_URL
 import com.joerakhimov.niceweather.forecast.ForecastApi
+import com.joerakhimov.niceweather.utils.TemperatureConverter
+import com.joerakhimov.niceweather.utils.TemperatureConverterImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,5 +63,12 @@ class AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ForecastApi::class.java)
+
+    @InstallIn(SingletonComponent::class)
+    @Module
+    interface Bindings {
+        @Binds
+        fun bindTemperatureConverter(repository: TemperatureConverterImpl): TemperatureConverter
+    }
 
 }
