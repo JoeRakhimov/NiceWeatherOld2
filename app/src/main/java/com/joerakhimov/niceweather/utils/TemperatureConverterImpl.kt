@@ -59,7 +59,7 @@ class TemperatureConverterImpl @Inject constructor() : TemperatureConverter {
     }
 
     // Coroutines
-    override suspend fun fromCelsiusToFahrenheitUsingFlows(celsius: Double): Flow<Double> {
+    override fun fromCelsiusToFahrenheitUsingFlows(celsius: Double): Flow<Double> {
         return flow {
             this.emit(celsius * 1.8 + 32)
         }
