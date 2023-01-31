@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
+import com.joerakhimov.niceweather.leakage.MyListener
+import com.joerakhimov.niceweather.leakage.MyManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ForecastActivity : AppCompatActivity() {
+class ForecastActivity : AppCompatActivity(), MyListener {
 
     @Inject
     lateinit var api: ForecastApi
@@ -20,6 +22,7 @@ class ForecastActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MyManager.addListener(this)
         getForecast()
     }
 
@@ -38,6 +41,15 @@ class ForecastActivity : AppCompatActivity() {
             recycler_forecast.layoutManager = LinearLayoutManager(this)
             recycler_forecast.adapter = ForecastAdapter(forecast.daily)
         }
+    }
+
+    override fun onChange(text: String) {
+        title = text
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyManager.removeListener(this)
     }
 
 }
