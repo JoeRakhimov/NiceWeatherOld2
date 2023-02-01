@@ -91,6 +91,15 @@ class ForecastFragment : Fragment() {
             recycler_forecast.layoutManager = LinearLayoutManager(context)
             recycler_forecast.adapter = ForecastAdapter(forecast.daily)
         }
+        addTestFragment()
+    }
+
+    private fun addTestFragment(){
+        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+        val fragment = TestFragment.newInstance("","")
+        fragmentTransaction?.add(R.id.container, fragment)
+        fragmentTransaction?.addToBackStack(null)
+        fragmentTransaction?.commit()
     }
 
 }

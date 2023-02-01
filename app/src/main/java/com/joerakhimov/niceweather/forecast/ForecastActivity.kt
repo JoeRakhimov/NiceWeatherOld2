@@ -29,6 +29,11 @@ class ForecastActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportFragmentManager.popBackStack()
+    }
+
 //    private fun getForecast() {
 //        runBlocking {
 //            withContext(Dispatchers.IO) {
