@@ -1,14 +1,14 @@
 package com.joerakhimov.niceweather.data.repository
 
 import com.joerakhimov.niceweather.data.source.local.LocalForecastDataSource
-import com.joerakhimov.niceweather.data.source.remote.RemoteForecastDataSource
+import com.joerakhimov.niceweather.data.source.remote.RemoteForecastSource
 import com.joerakhimov.niceweather.domain.entity.ForecastResponseEntity
 import com.joerakhimov.niceweather.domain.repository.ForecastRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 
 class ForecastRepositoryImpl(
-    private val remoteForecastDataSource: RemoteForecastDataSource,
+    private val remoteForecastDataSource: RemoteForecastSource,
     private val localForecastDataSource: LocalForecastDataSource
 ) : ForecastRepository {
 

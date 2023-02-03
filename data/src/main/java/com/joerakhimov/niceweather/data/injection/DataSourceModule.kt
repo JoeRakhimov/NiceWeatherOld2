@@ -1,9 +1,7 @@
 package com.joerakhimov.niceweather.data.injection
 
-import com.joerakhimov.niceweather.data.repository.ForecastRepositoryImpl
-import com.joerakhimov.niceweather.data.source.remote.RemoteForecastDataSource
-import com.joerakhimov.niceweather.data.source.remote.RemoteForecastDataSourceImpl
-import com.joerakhimov.niceweather.domain.repository.ForecastRepository
+import com.joerakhimov.niceweather.data.source.remote.RemoteForecastSource
+import com.joerakhimov.niceweather.data.source.remote.RemoteForecastSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataSourceModule {
 
     @Binds
-    abstract fun bindRemoteForecastDataSource(remoteForecastDataSourceImpl: RemoteForecastDataSourceImpl): RemoteForecastDataSource
+    abstract fun bindRemoteForecastDataSource(remoteForecastDataSourceImpl: RemoteForecastSourceImpl): RemoteForecastSource
 
 }

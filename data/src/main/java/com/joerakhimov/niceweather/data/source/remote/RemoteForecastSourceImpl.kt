@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 
-class RemoteForecastDataSourceImpl(private val forecastApi: ForecastApi) :
-    RemoteForecastDataSource {
+class RemoteForecastSourceImpl(private val forecastApi: ForecastApi) :
+    RemoteForecastSource {
 
     override fun getForecast(latitude: Double?, longitude: Double?): Flow<ForecastResponseEntity> =
         flow {
