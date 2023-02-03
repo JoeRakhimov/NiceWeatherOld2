@@ -1,11 +1,13 @@
 package com.joerakhimov.niceweather.domain.usecase
 
+import com.joerakhimov.niceweather.domain.entity.DailyItemEntity
 import com.joerakhimov.niceweather.domain.entity.ForecastResponseEntity
 import com.joerakhimov.niceweather.domain.repository.ForecastRepository
 import com.joerakhimov.niceweather.domain.repository.LocationRepository
 import com.joerakhimov.niceweather.domain.entity.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class GetForecastUseCase(
@@ -20,18 +22,16 @@ class GetForecastUseCase(
                 Response(it)
             }
         } else {
-            combine(
-                forecastRepository.getForecast(),
-                locationRepository.getLocation()
-            ) { forecast, location ->
-                forecast.location = location
-                Result.Success(forecast) as Result<ForecastResponseEntity>
-                Response(forecast)
-            }
+            locationRepository.getLocation()
+                .flatMapLatest { location ->
+                    forecastRepository.getForecast(request.latitude, request.longitude).map { dailyForecast ->
+                        Response(dailyForecast)
+                    }
+                }
         }
 
     data class Request(val latitude: Double?, val longitude: Double?) : UseCase.Request
 
-    data class Response(val forecastResponseEntity: ForecastResponseEntity) : UseCase.Response
+    data class Response(val forecastResponseEntity: List<DailyItemEntity>) : UseCase.Response
 
 }

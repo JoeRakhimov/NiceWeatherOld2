@@ -12,20 +12,18 @@ class ForecastRepositoryImpl(
     private val localForecastDataSource: LocalForecastDataSource
 ) : ForecastRepository {
 
-    override fun getForecast(latitude: Double?, longitude: Double?): Flow<List<DailyItemEntity>> {
-        return localForecastDataSource.getForecast()
-
-//        return remoteForecastDataSource.getForecast(latitude, longitude)
-//            .onEach { forecast ->
-//                forecast.daily?.let { daily -> localForecastDataSource.insertForecast(daily) }
-//            }.map { it.daily ?: emptyList() }
-    }
+    override fun getForecast(latitude: Double?, longitude: Double?): Flow<List<DailyItemEntity>> =
+        localForecastDataSource.getForecast().flatMapLatest { dailyForecast ->
+            if (dailyForecast.isEmpty()) refreshForecast(latitude, longitude)
+            else flowOf(dailyForecast)
+        }
 
     override fun refreshForecast(
         latitude: Double?,
         longitude: Double?
-    ): Flow<List<DailyItemEntity>> {
-        TODO("Not yet implemented")
-    }
+    ): Flow<List<DailyItemEntity>> = remoteForecastDataSource.getForecast(latitude, longitude)
+        .onEach {
+            it.daily?.let { it1 -> localForecastDataSource.insertForecast(it1) }
+        }.map { it.daily ?: emptyList() }
 
 }
