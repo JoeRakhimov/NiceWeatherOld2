@@ -5,6 +5,6 @@ import com.joerakhimov.niceweather.domain.entity.ForecastResponseEntity
 import kotlinx.coroutines.flow.Flow
 
 interface LocalForecastDataSource {
-    fun getForecast(latitude: Double?, longitude: Double?): Flow<List<DailyItemEntity>>
+    fun getForecast(): Flow<List<DailyItemEntity>>
     suspend fun insertForecast(dailyForecast: List<DailyItemEntity>)
 }
