@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalForecastDataSource {
     fun getForecast(latitude: Double?, longitude: Double?): Flow<List<DailyItemEntity>>
-    fun insertForecast(dailyForecast: List<DailyItemEntity>)
+    suspend fun insertForecast(dailyForecast: List<DailyItemEntity>)
 }
