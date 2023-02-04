@@ -12,12 +12,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
-    private val useCase: GetForecastUseCase
-): ViewModel() {
+    private val useCase: GetForecastUseCase,
+    private val converter: DailyForecastConverter
+) : ViewModel() {
 
     private val _dailyForecast =
-        MutableStateFlow< UiState<List<DailyItem>>>(UiState.Loading)
-    val postListFlow: StateFlow<UiState<List<DailyItem>>> = _dailyForecast
+        MutableStateFlow<UiState<List<DailyItem>>>(UiState.Loading)
+    val dailyForecast: StateFlow<UiState<List<DailyItem>>> = _dailyForecast
 
     fun loadForecast() {
         viewModelScope.launch {
@@ -26,7 +27,7 @@ class ForecastViewModel @Inject constructor(
                     converter.convert(it)
                 }
                 .collect {
-                    _postListFlow.value = it
+                    _dailyForecast.value = it
                 }
         }
     }
