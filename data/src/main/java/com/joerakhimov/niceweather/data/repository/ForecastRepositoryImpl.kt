@@ -24,8 +24,8 @@ class ForecastRepositoryImpl(
         longitude: Double?
     ): Flow<List<DailyItemEntity>> = remoteForecastDataSource.getForecast(latitude, longitude)
         .onEach {
-            it.daily?.let { it1 -> localForecastSource.insertForecast(it1) }
-            it.location?.name?.let { it1 -> localLocationSource.saveLocationName(it1) }
+            it.daily?.let { daily -> localForecastSource.insertForecast(daily) }
+            it.location?.name?.let { locationName -> localLocationSource.saveLocationName(locationName) }
         }.map { it.daily ?: emptyList() }
 
 }
