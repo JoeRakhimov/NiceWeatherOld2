@@ -18,20 +18,23 @@ class GetForecastUseCase @Inject constructor(
 ) : UseCase<GetForecastUseCase.Request, GetForecastUseCase.Response>(configuration) {
 
     override fun process(request: Request): Flow<Response> =
-        if (request.latitude != null && request.longitude != null) {
-            forecastRepository.getForecast(request.latitude, request.longitude).map {
-                Response(it)
-            }
-        } else {
-            locationRepository.getLocation()
-                .flatMapLatest { location ->
-                    forecastRepository.getForecast(request.latitude, request.longitude).map { dailyForecast ->
-                        Response(dailyForecast)
-                    }
-                }
+        forecastRepository.getForecast(request.latitude, request.longitude).map { dailyForecast ->
+            Response(dailyForecast)
         }
+//        if (request.latitude != null && request.longitude != null) {
+//            forecastRepository.getForecast(request.latitude, request.longitude).map {
+//                Response(it)
+//            }
+//        } else {
+//            locationRepository.getLocation()
+//                .flatMapLatest { location ->
+//                    forecastRepository.getForecast(request.latitude, request.longitude).map { dailyForecast ->
+//                        Response(dailyForecast)
+//                    }
+//                }
+//        }
 
-    data class Request(val latitude: Double?, val longitude: Double?) : UseCase.Request
+    data class Request(val latitude: Double? = null, val longitude: Double? = null) : UseCase.Request
 
     data class Response(val forecastResponseEntity: List<DailyItemEntity>) : UseCase.Response
 
