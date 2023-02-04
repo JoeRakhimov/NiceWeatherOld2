@@ -1,4 +1,4 @@
-package com.joerakhimov.niceweather.data.source.local
+package com.joerakhimov.niceweather.data.source.local.forecast
 
 import androidx.room.*
 

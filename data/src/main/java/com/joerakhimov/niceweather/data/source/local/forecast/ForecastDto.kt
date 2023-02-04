@@ -1,6 +1,5 @@
-package com.joerakhimov.niceweather.data.source.local
+package com.joerakhimov.niceweather.data.source.local.forecast
 
-import android.location.Location
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,11 +1,6 @@
-package com.joerakhimov.niceweather.data.source.local
+package com.joerakhimov.niceweather.data.source.local.forecast
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import com.joerakhimov.niceweather.data.source.remote.DailyItemModel
-import com.joerakhimov.niceweather.domain.entity.ForecastResponseEntity
-import kotlinx.coroutines.flow.Flow
 
 class LocalForecastSourceImpl(private val forecastDao: ForecastDao): LocalForecastSource {
 
