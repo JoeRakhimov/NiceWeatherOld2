@@ -1,8 +1,8 @@
 package com.joerakhimov.presentation.forecast
 
 import com.joerakhimov.niceweather.domain.usecase.GetForecastUseCase
-import com.joerakhimov.presentation.R
 import com.joerakhimov.niceweather.domain.entity.Result
+import com.joerakhimov.presentation.common.UiState
 
 class DailyForecastConverter {
 

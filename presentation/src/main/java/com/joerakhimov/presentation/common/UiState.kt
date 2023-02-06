@@ -1,4 +1,4 @@
-package com.joerakhimov.presentation.forecast
+package com.joerakhimov.presentation.common
 
 sealed class UiState<out T : Any> {
     object Loading : UiState<Nothing>()

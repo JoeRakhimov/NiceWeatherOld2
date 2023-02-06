@@ -3,6 +3,7 @@ package com.joerakhimov.presentation.forecast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joerakhimov.niceweather.domain.usecase.GetForecastUseCase
+import com.joerakhimov.presentation.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
