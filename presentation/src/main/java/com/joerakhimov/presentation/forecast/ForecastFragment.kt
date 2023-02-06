@@ -5,9 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.joerakhimov.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.joerakhimov.presentation.common.UiState
+import kotlinx.android.synthetic.main.fragment_forecast.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -33,12 +38,30 @@ class ForecastFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewModel.uiStateFlow.collect {
-            when(it){
-
+        lifecycleScope.launchWhenStarted {
+            viewModel.uiStateFlow.collect {
+                when (it) {
+                    UiState.Loading -> renderLoadingState()
+                    is UiState.Error -> showError(it.errorMessage)
+                    is UiState.Success -> showForecast(it.data)
+                }
             }
         }
+
         return inflater.inflate(R.layout.fragment_forecast, container, false)
+    }
+
+    private fun renderLoadingState() {
+        container.isRefreshing = true
+    }
+
+    private fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showForecast(forecast: DailyForecast) {
+        recycler_forecast.layoutManager = LinearLayoutManager(context)
+        recycler_forecast.adapter = ForecastAdapter(forecast.items)
     }
 
     companion object {
