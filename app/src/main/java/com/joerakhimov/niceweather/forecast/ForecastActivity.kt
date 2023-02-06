@@ -2,6 +2,7 @@ package com.joerakhimov.niceweather.forecast
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.joerakhimov.niceweather.R
 import com.joerakhimov.presentation.forecast.ForecastFragment
 import dagger.hilt.android.AndroidEntryPoint

@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-android'
     id 'com.google.dagger.hilt.android'
 }
 
@@ -52,5 +53,6 @@ dependencies {
     // Kotlin extensions for activity artifacts
     implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.fragment:fragment-ktx:1.6.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
 }
