@@ -22,15 +22,6 @@ class ForecastViewModel @Inject constructor(
             is ForecastUiAction.Load -> {
                 loadForecast()
             }
-            is ForecastUiAction.Refresh -> {
-//                submitSingleEvent(
-//                    PostListUiSingleEvent.OpenUserScreen(
-//                        NavRoutes.User.routeForUser(
-//                            UserInput(action.userId)
-//                        )
-//                    )
-//                )
-            }
             is ForecastUiAction.ForecastClick -> {
 //                submitSingleEvent(
 //                    PostListUiSingleEvent.OpenPostScreen(
