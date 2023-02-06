@@ -7,24 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.joerakhimov.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.fragment.app.viewModels
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ForecastFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @AndroidEntryPoint
 class ForecastFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-//    lateinit var viewModel: ForecastViewModel by viewModels()
+    var viewModel: ForecastViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +33,11 @@ class ForecastFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        viewModel.uiStateFlow.collect {
+            when(it){
+
+            }
+        }
         return inflater.inflate(R.layout.fragment_forecast, container, false)
     }
 
