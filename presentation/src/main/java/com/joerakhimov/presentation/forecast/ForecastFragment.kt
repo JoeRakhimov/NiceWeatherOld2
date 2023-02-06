@@ -22,6 +22,8 @@ class ForecastFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+//    lateinit var viewModel: ForecastViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

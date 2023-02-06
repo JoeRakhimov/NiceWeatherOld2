@@ -1,13 +1,11 @@
 package com.joerakhimov.presentation.forecast
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joerakhimov.niceweather.domain.usecase.GetForecastUseCase
+import com.joerakhimov.presentation.common.MviViewModel
 import com.joerakhimov.presentation.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,22 +13,49 @@ import javax.inject.Inject
 class ForecastViewModel @Inject constructor(
     private val useCase: GetForecastUseCase,
     private val converter: DailyForecastConverter
-) : ViewModel() {
+) : MviViewModel<DailyForecast, UiState<DailyForecast>, ForecastUiAction, ForecastUiSingleEvent>() {
 
-    private val _dailyForecast =
-        MutableStateFlow<UiState<List<DailyItem>>>(UiState.Loading)
-    val dailyForecast: StateFlow<UiState<List<DailyItem>>> = _dailyForecast
+    override fun initState(): UiState<DailyForecast> = UiState.Loading
 
-    fun loadForecast() {
+    override fun handleAction(action: ForecastUiAction) {
+        when (action) {
+            is ForecastUiAction.Load -> {
+                loadForecast()
+            }
+            is ForecastUiAction.Refresh -> {
+//                submitSingleEvent(
+//                    PostListUiSingleEvent.OpenUserScreen(
+//                        NavRoutes.User.routeForUser(
+//                            UserInput(action.userId)
+//                        )
+//                    )
+//                )
+            }
+            is ForecastUiAction.ForecastClick -> {
+//                submitSingleEvent(
+//                    PostListUiSingleEvent.OpenPostScreen(
+//                        NavRoutes.Post.routeForPost(
+//                            PostInput(action.postId)
+//                        )
+//                    )
+//                )
+            }
+        }
+
+    }
+
+    private fun loadForecast() {
         viewModelScope.launch {
             useCase.execute(GetForecastUseCase.Request())
                 .map {
                     converter.convert(it)
                 }
                 .collect {
-                    _dailyForecast.value = it
+//                    submitState(it)
                 }
         }
+
     }
+
 
 }
