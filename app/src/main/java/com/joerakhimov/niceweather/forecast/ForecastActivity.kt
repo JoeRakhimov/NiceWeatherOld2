@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
+import com.joerakhimov.niceweather.solid.ApiDataFetcher
+import com.joerakhimov.niceweather.solid.AreaUtil
+import com.joerakhimov.niceweather.solid.Rectangle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +24,11 @@ class ForecastActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getForecast()
+
+        AreaUtil.calculateArea(listOf<Rectangle>())
+
+        val dataFetcher = ApiDataFetcher()
+        dataFetcher.fetch()
     }
 
     private fun getForecast() {
