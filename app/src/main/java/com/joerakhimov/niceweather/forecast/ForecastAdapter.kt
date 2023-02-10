@@ -9,8 +9,7 @@ import kotlinx.android.synthetic.main.listitem_forecast.view.*
 
 class ForecastAdapter(
     private val dailyForecast: List<DailyItem>
-) :
-    RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
