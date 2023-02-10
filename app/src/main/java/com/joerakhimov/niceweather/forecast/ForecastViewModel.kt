@@ -12,14 +12,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ForecastViewModel @Inject constructor(private val api: ForecastApi): ViewModel() {
+class ForecastViewModel @Inject constructor(private val repository: ForecastRepository): ViewModel() {
 
     private val _forecast = MutableLiveData<ForecastResponse>()
     val forecast: LiveData<ForecastResponse> = _forecast
 
     fun getForecast() {
         viewModelScope.launch {
-            _forecast.value = api.getForecast()
+            _forecast.value = repository.getForecast()
         }
     }
 

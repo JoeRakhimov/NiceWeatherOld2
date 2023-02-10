@@ -1,9 +1,13 @@
 package com.joerakhimov.niceweather.di
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.joerakhimov.niceweather.forecast.BASE_URL
 import com.joerakhimov.niceweather.forecast.ForecastApi
+import com.joerakhimov.niceweather.forecast.ForecastRepository
+import com.joerakhimov.niceweather.forecast.ForecastRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,5 +64,11 @@ class AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ForecastApi::class.java)
+
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences = context.getSharedPreferences("NiceWeatherPrefs", MODE_PRIVATE)
+
+    @Provides
+    fun provideRepository(api: ForecastApi, sharedPreferences: SharedPreferences): ForecastRepository = ForecastRepositoryImpl(api, sharedPreferences)
 
 }
