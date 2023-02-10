@@ -48,4 +48,17 @@ class ForecastRepositoryTest {
         }
     }
 
+    @Test
+    fun saveLocation_shouldNotSaveIfSameLocation() {
+        val previouslySavedLocation = "Tashkent"
+        val newLocation = "Tashkent"
+        val spyRepository = spy(repository)
+        doReturn(previouslySavedLocation)
+            .whenever(spyRepository)
+            .getLocation()
+        spyRepository.saveLocation(newLocation)
+        verify(preferencesEditor, never())
+            .putString(any(), eq(newLocation))
+    }
+
 }
