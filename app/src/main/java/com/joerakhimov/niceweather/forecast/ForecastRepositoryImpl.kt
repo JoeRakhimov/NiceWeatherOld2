@@ -2,6 +2,7 @@ package com.joerakhimov.niceweather.forecast
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.joerakhimov.niceweather.testing.MyCallback
 
 class ForecastRepositoryImpl(
     private val api: ForecastApi,
@@ -22,6 +23,10 @@ class ForecastRepositoryImpl(
 
     override fun getLocation(): String {
         return preferences.getString("Location", "")!!
+    }
+
+    override fun getInfo(callback: MyCallback) {
+        callback.onSuccess("Success")
     }
 
 }

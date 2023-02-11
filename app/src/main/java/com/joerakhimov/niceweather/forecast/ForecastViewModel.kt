@@ -14,13 +14,18 @@ import javax.inject.Inject
 @HiltViewModel
 class ForecastViewModel @Inject constructor(private val repository: ForecastRepository): ViewModel() {
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
     private val _forecast = MutableLiveData<ForecastResponse>()
     val forecast: LiveData<ForecastResponse> = _forecast
 
     fun getForecast() {
-        viewModelScope.launch {
-            _forecast.value = repository.getForecast()
-        }
+        _loading.value = true
+//        viewModelScope.launch {
+//            _forecast.value = repository.getForecast()
+//            _loading.value = false
+//        }
     }
 
 }
