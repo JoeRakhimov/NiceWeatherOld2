@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'io.gitlab.arturbosch.detekt'
 }
 
 android {
@@ -65,4 +66,12 @@ dependencies {
 // Allow references to generated code
 kapt {
     correctErrorTypes true
+}
+
+// Instruction how to add Detekt to Android Studio project:
+// https://medium.com/@nagendran.p/integrating-detekt-in-the-android-studio-442128e971f8
+detekt {
+    // other detekt configuration goes here
+    baseline = file("$rootDir/detekt-baseline.xml")
+
 }

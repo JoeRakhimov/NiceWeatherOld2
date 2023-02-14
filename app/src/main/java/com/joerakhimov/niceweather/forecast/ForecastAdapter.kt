@@ -1,5 +1,4 @@
 package com.joerakhimov.niceweather.forecast
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

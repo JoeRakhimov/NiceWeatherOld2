@@ -1,5 +1,4 @@
 package com.joerakhimov.niceweather.di
-
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.joerakhimov.niceweather.forecast.BASE_URL

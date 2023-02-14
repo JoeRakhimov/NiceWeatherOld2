@@ -1,5 +1,4 @@
 package com.joerakhimov.niceweather
-
 import org.junit.Test
 
 import org.junit.Assert.*
