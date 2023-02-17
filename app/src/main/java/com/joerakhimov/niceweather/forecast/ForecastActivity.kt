@@ -2,6 +2,7 @@ package com.joerakhimov.niceweather.forecast
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings.Global
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,11 @@ class ForecastActivity : AppCompatActivity() {
         GlobalScope.launch(context = Dispatchers.Main) { action() }
     }
 
+    suspend fun square(value: Int): Int {
+        delay(1000)
+        return value * value
+    }
+
     @Inject
     lateinit var api: ForecastApi
 
@@ -37,6 +43,12 @@ class ForecastActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getForecast()
+
+        GlobalScope.launch(Dispatchers.Main) {
+            val result = square(5)
+            title = result.toString()
+        }
+
     }
 
     private fun getForecast() {
