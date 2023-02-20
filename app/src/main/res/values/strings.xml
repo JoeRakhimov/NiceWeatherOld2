@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NiceWeather</string>
     <string name="title_activity_playground">PlaygroundActivity</string>
+    <string name="confirm">Confirm</string>
+    <string name="alert_dialog_title">Title</string>
+    <string name="alert_dialog_text">Text</string>
 </resources>

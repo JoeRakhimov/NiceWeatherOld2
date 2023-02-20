@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontStyle
@@ -80,7 +81,7 @@ fun Greeting(name: String) {
 
         // Button
         Button(
-            onClick = {},
+            onClick = { },
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.teal_700)),
             border = BorderStroke(
                 1.dp,
@@ -93,8 +94,48 @@ fun Greeting(name: String) {
             )
         }
 
+        // Image
+        Icon(painterResource(id=R.drawable.ic_android_black_24dp), contentDescription = "")
+
+        // Progress
+        CircularProgressIndicator(
+            color = colorResource(id = R.color.purple_200),
+            strokeWidth = 5.dp
+        )
+        LinearProgressIndicator(progress = 0.5f)
+
+        // Dialog
+        MyAlertDialog()
+
     }
 
+}
+
+@Composable
+fun MyAlertDialog() {
+    val shouldShowDialog = remember { mutableStateOf(true) }
+    if (shouldShowDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                shouldShowDialog.value = false
+            },
+            title = { Text(text = stringResource(id = R.string.alert_dialog_title)) },
+            text = { Text(text = stringResource(id = R.string.alert_dialog_text)) },
+            confirmButton = {
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.teal_700)),
+                    onClick = {
+                        shouldShowDialog.value = false
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.confirm),
+                        color = Color.White
+                    )
+                }
+            }
+        )
+    }
 }
 
 @Preview(showBackground = true)
