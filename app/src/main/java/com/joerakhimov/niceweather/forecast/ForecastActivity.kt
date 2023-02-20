@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joerakhimov.niceweather.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -35,8 +34,8 @@ class ForecastActivity : AppCompatActivity() {
     private fun showForecast(forecast: ForecastResponse) {
         title = forecast.location?.name
         if(forecast.daily!=null){
-            recycler_forecast.layoutManager = LinearLayoutManager(this)
-            recycler_forecast.adapter = ForecastAdapter(forecast.daily)
+//            binding.recycler_forecast.layoutManager = LinearLayoutManager(this)
+//            binding.recycler_forecast.adapter = ForecastAdapter(forecast.daily)
         }
     }
 

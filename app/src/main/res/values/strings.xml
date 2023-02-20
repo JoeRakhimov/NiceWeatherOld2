@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NiceWeather</string>
+    <string name="title_activity_playground">PlaygroundActivity</string>
 </resources>
