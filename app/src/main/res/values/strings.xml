@@ -4,4 +4,5 @@
     <string name="confirm">Confirm</string>
     <string name="alert_dialog_title">Title</string>
     <string name="alert_dialog_text">Text</string>
+    <string name="hello">Hello</string>
 </resources>
