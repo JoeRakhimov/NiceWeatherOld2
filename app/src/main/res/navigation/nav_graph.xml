@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/forecastFragment">
+
+    <action
+        android:id="@+id/actionGlobalLocation"
+        app:destination="@id/locationFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <fragment
+        android:id="@+id/forecastFragment"
+        android:name="com.joerakhimov.niceweather.forecast.ForecastFragment"
+        android:label="fragment_forecast"
+        tools:layout="@layout/fragment_forecast" >
+
+        <action
+            android:id="@+id/actionLocation"
+            app:destination="@id/locationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.joerakhimov.niceweather.location.LocationFragment"
+        android:label="fragment_location"
+        tools:layout="@layout/fragment_location">
+        <argument
+            android:name="location"
+            app:argType="string" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="www.joerakhimov.com/{location}" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:uri="niceweather://home/location/{location}" />
+    </fragment>
+
+</navigation>
