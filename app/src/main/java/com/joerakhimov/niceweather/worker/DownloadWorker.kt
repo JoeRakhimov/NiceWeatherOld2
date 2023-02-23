@@ -1,8 +1,7 @@
 package com.joerakhimov.niceweather.worker
 
 import android.content.Context
-import androidx.work.Worker
-import androidx.work.WorkerParameters
+import androidx.work.*
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
