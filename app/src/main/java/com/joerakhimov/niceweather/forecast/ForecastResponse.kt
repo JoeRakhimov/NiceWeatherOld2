@@ -12,6 +12,7 @@ data class ForecastResponse(
 
 	@field:SerializedName("location")
 	val location: Location? = null
+
 )
 
 data class Current(
@@ -51,6 +52,7 @@ data class Location(
 
 	@field:SerializedName("longitude")
 	val longitude: Double? = null
+
 )
 
 data class HoursItem(
@@ -66,6 +68,7 @@ data class HoursItem(
 
 	@field:SerializedName("time")
 	val time: String? = null
+
 )
 
 data class DailyItem(
@@ -87,4 +90,5 @@ data class DailyItem(
 
 	@field:SerializedName("temp_max")
 	val tempMax: Double? = null
+
 )
