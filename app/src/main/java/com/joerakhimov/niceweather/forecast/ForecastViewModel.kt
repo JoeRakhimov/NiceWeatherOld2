@@ -22,10 +22,10 @@ class ForecastViewModel @Inject constructor(private val repository: ForecastRepo
 
     fun getForecast() {
         _loading.value = true
-//        viewModelScope.launch {
-//            _forecast.value = repository.getForecast()
-//            _loading.value = false
-//        }
+        viewModelScope.launch {
+            _forecast.value = repository.getForecast()
+            _loading.value = false
+        }
     }
 
 }
