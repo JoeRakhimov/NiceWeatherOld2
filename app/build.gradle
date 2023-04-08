@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -66,6 +67,12 @@ dependencies {
 
     // Kotlin extensions for activity artifacts
     implementation 'androidx.activity:activity-ktx:1.6.1'
+
+    // Screengrab
+    androidTestImplementation "tools.fastlane.screengrab:2.0.0"
+    androidTestImplementation "com.jraska:falkom:2.2.0"
+
+    implementation 'com.google.firebase:firebase-bom:31.4.0'
 
 }
 

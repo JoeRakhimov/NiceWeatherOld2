@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883162885254",
+    "project_id": "niceweather-446e0",
+    "storage_bucket": "niceweather-446e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883162885254:android:5f5f55d0f1a7a469cf7507",
+        "android_client_info": {
+          "package_name": "com.joerakhimov.niceweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883162885254-2g2klt9neqbutee94irqr2ln801b3mhm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCocWBIKuaN49Li74vZjhJpd_UqgpGux8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883162885254-2g2klt9neqbutee94irqr2ln801b3mhm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
